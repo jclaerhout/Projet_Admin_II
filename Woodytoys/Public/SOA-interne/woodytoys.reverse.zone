@@ -1,0 +1,12 @@
+$ORIGIN .
+$TTL 86400	; 1 day
+0.0.10.in-addr.arpa	IN SOA	resolv.internal.woodytoys.be. hostmaster.woodytoys.be. (
+				2001062531 ; serial
+				21600      ; refresh (6 hours)
+				3600       ; retry (1 hour)
+				604800     ; expire (1 week)
+				86400      ; minimum (1 day)
+				)
+			NS	resolv.internal.woodytoys.be.
+$ORIGIN 0.0.10.in-addr.arpa.
+1			PTR	resolv.internal.woodytoys.be.

@@ -1,0 +1,26 @@
+$ORIGIN .
+$TTL 86400	; 1 day
+woodytoys.lab		IN SOA	resolv.woodytoys.lab. hostmaster.woodytoys.lab. (
+				2001062541 ; serial
+				21600      ; refresh (6 hours)
+				3600       ; retry (1 hour)
+				604800     ; expire (1 week)
+				86400      ; minimum (1 day)
+				)
+			NS	resolv.woodytoys.lab.
+$ORIGIN woodytoys.lab.
+$TTL 3600	; 1 hour
+atelier			A	192.168.0.38
+			DHCID	( AAABitMezH4o9T1kg8gPh+TFBn8gydTP5MfjL6WTnRRi
+				OFM= ) ; 0 1 32
+$TTL 86400	; 1 day
+blog			CNAME	www
+dhcp			A	192.168.0.3
+$TTL 3600	; 1 hour
+directeur		A	192.168.0.39
+			DHCID	( AAABHRFF5VhtteMnnEdHCXNxDbgnY++5j+nsESzgDmQY
+				GDo= ) ; 0 1 32
+$TTL 86400	; 1 
+resolv			A	172.17.0.2
+soa			A	192.168.0.2
+www			A	192.168.0.4
