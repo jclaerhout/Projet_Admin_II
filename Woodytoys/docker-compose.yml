@@ -28,12 +28,16 @@ networks:
 ##       Docker Services Configuration      ##
 services:
   web-serveur:
-    image: ubuntu
+    build:
+      context: ./Intranet/web
+      dockerfile: Dockerfile
     hostname: www
     domainname: woodytoys.be
     networks:
       DMZ:
         ipv4_address: 172.16.0.2
+    links:
+      - database
     container_name: web-serveur
 
   soa-externe:
@@ -73,4 +77,10 @@ services:
     networks:
       database-zone:
         ipv4_address: 10.1.0.2
+    environment:
+      MYSQL_DATABASE : woodytoys_db
+      MYSQL_ROOT_PASSWORD: 'admin'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'admin'
+    restart: always
     container_name: database
