@@ -1,0 +1,85 @@
+version: '3.3'
+name: 'woodytoys'
+
+##       Docker Networks Configuration      ##
+networks:
+  trusted-zone:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/24
+            DMZ:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24
+          gateway: 172.16.0.1
+  database-zone:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24
+          gateway: 10.1.0.1
+
+##       Docker Services Configuration      ##
+services:
+  web-serveur:
+    build:
+      context: ./Intranet/web
+      dockerfile: Dockerfile
+    hostname: www
+    domainname: woodytoys.be
+    networks:
+      DMZ:
+        ipv4_address: 172.16.0.2
+    links:
+      - database
+    container_name: web-serveur
+
+  soa-externe:
+    image: ubuntu
+    networks:
+      DMZ:
+        ipv4_address: 172.16.0.3
+    container_name: soa-externe
+
+  mail-serveur:
+    image: ubuntu
+    networks:
+      DMZ:
+        ipv4_address: 172.16.0.4
+    container_name: mail-serveur
+
+  soa-interne:
+    build:
+      context: ./Public/SOA-interne
+      dockerfile: Dockerfile
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.2
+    container_name: soa-interne
+  
+  resolver:
+    build:
+      context: ./Public/resolveur
+      dockerfile: Dockerfile
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.3
+    container_name: resolv
+  
+  database:
+    image: mysql
+    networks:
+      database-zone:
+        ipv4_address: 10.1.0.2
+    environment:
+      MYSQL_DATABASE : woodytoys_db
+      MYSQL_ROOT_PASSWORD: 'admin'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'admin'
+    restart: always
+    container_name: database

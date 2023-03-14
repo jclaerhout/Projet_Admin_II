@@ -29,6 +29,8 @@ services:
       dockerfile: Dockerfile
     hostname: www
     domainname: woodytoys.be
+    ports:
+      - 80:80
     networks:
       DMZ:
         ipv4_address: 172.16.0.2
