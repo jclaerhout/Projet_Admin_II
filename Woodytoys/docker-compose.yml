@@ -1,5 +1,4 @@
 version: '3'
-name: 'woodytoys'
 
 ##       Docker Networks Configuration      ##
 networks:
@@ -9,21 +8,18 @@ networks:
       driver: default
       config:
         - subnet: 10.0.0.0/24
-          gateway: 10.0.0.1
   DMZ:
     driver: bridge
     ipam:
       driver: default
       config:
         - subnet: 172.16.0.0/24
-          gateway: 172.16.0.1
-  database-zone:
+  zone-woodytoys:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: 10.1.0.0/24
-          gateway: 10.1.0.1
+        - subnet: 10.2.0.0/24
 
 ##       Docker Services Configuration      ##
 services:
@@ -41,7 +37,7 @@ services:
     container_name: web-serveur
 
   soa-externe:
-    image: ubuntu
+    image: ubuntu/bind9
     networks:
       DMZ:
         ipv4_address: 172.16.0.3
@@ -75,8 +71,8 @@ services:
   database:
     image: mysql
     networks:
-      database-zone:
-        ipv4_address: 10.1.0.2
+      trusted-zone:
+        ipv4_address: 10.0.0.4
     environment:
       MYSQL_DATABASE : woodytoys_db
       MYSQL_ROOT_PASSWORD: 'admin'
@@ -84,3 +80,21 @@ services:
       MYSQL_PASSWORD: 'admin'
     restart: always
     container_name: database
+
+  employe1:
+    build:
+      context: ./Employes
+      dockerfile: Dockerfile
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.5
+    container_name: employe1
+
+  employe2:
+    build:
+      context: ./Employes
+      dockerfile: Dockerfile
+    networks:
+      DMZ:
+        ipv4_address: 172.16.0.5
+    container_name: employe2
