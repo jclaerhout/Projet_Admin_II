@@ -31,12 +31,12 @@ services:
     domainname: woodytoys.be
     ports:
       - 80:80
-    networks:
-      DMZ:
-        ipv4_address: 172.16.0.2
+      - 8080:8080
     links:
       - database
     container_name: web-serveur
+    volumes:
+      - ./Intranet/web/php/src:/var/www/html/
 
   soa-externe:
     image: ubuntu/bind9
@@ -72,9 +72,11 @@ services:
   
   database:
     image: mysql
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.4
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_DATABASE : woodytoys_db
       MYSQL_ROOT_PASSWORD: 'admin'
@@ -82,6 +84,8 @@ services:
       MYSQL_PASSWORD: 'admin'
     restart: always
     container_name: database
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
 
   employe1:
     build:
