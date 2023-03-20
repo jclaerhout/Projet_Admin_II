@@ -1,14 +1,19 @@
-$ORIGIN .
+$ORIGIN internal.woodytoys.be.
 $TTL 86400	; 1 day
-woodytoys.be		IN SOA	resolv.internal.woodytoys.be. hostmaster.woodytoys.be. (
+@	IN SOA	ns.internal.woodytoys.be. hostmaster.woodytoys.be. (
 				2001062541 ; serial
 				21600      ; refresh (6 hours)
 				3600       ; retry (1 hour)
 				604800     ; expire (1 week)
 				86400      ; minimum (1 day)
 				)
-			NS	resolv.internal.woodytoys.be.
-$ORIGIN internal.woodytoys.be.
 
-$TTL 86400	; 1 day
-resolv			A	10.0.0.3
+		IN	NS	ns.internal.woodytoys.be.
+ns		IN	A	10.0.0.2
+
+
+www			A	172.16.0.2
+soa-ext			A	172.16.0.3
+mail			A	172.16.0.4
+resolveur		A	10.0.0.3
+database		A	10.0.0.4
