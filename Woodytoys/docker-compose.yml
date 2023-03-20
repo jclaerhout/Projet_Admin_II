@@ -25,7 +25,7 @@ networks:
 services:
   web-serveur:
     build:
-      context: ./Intranet/web
+      context: ./DMZ/web
       dockerfile: Dockerfile
     hostname: www
     domainname: woodytoys.be
@@ -36,7 +36,7 @@ services:
       - database
     container_name: web-serveur
     volumes:
-      - ./Intranet/web/php/src:/var/www/html/
+      - ./DMZ/web/php/src:/var/www/html/
 
   soa-externe:
     image: ubuntu/bind9
@@ -54,7 +54,7 @@ services:
 
   soa-interne:
     build:
-      context: ./Public/SOA-interne
+      context: ./trusted-zone/SOA-interne
       dockerfile: Dockerfile
     networks:
       trusted-zone:
@@ -63,17 +63,17 @@ services:
   
   resolver:
     build:
-      context: ./Public/resolveur
+      context: ./trusted-zone/resolveur
       dockerfile: Dockerfile
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.3
-    container_name: resolv
+    container_name: resolver
   
   database:
     image: mysql
     build:
-      context: ./db
+      context: ./trusted-zone/db
       dockerfile: Dockerfile
     ports:
       - "3306:3306"
@@ -85,11 +85,11 @@ services:
     restart: always
     container_name: database
     volumes:
-      - ./db:/docker-entrypoint-initdb.d
+      - ./trusted-zone/db:/docker-entrypoint-initdb.d
 
   employe1:
     build:
-      context: ./Employes
+      context: ./woodytoys-zone/Employes
       dockerfile: Dockerfile
     networks:
       trusted-zone:
@@ -98,7 +98,7 @@ services:
 
   employe2:
     build:
-      context: ./Employes
+      context: ./woodytoys-zone/Employes
       dockerfile: Dockerfile
     networks:
       DMZ:
