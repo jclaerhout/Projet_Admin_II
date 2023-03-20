@@ -32,6 +32,9 @@ services:
     ports:
       - 80:80
       - 8080:8080
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.4
     links:
       - database
     container_name: web-serveur
@@ -48,8 +51,8 @@ services:
   mail-serveur:
     image: ubuntu
     networks:
-      DMZ:
-        ipv4_address: 172.16.0.4
+      trusted-zone:
+        ipv4_address: 10.0.0.7
     container_name: mail-serveur
 
   soa-interne:
@@ -77,6 +80,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3306:3306"
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.6
     environment:
       MYSQL_DATABASE : woodytoys_db
       MYSQL_ROOT_PASSWORD: 'admin'
