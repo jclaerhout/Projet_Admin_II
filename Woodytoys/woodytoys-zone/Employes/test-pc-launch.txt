@@ -1,0 +1,2 @@
+docker run -ti --name employe1 --net woodytoys_trusted-zone --ip "10.0.0.10" employe
+/bin/bash
