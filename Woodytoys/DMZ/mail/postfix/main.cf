@@ -1,0 +1,17 @@
+myhostname = mail.woodytoys.lab
+mydestination = mail.example.com, mail.woodytoys.lab, example.com, localhost.localdomain, localhost
+mynetworks = 192.168.20.0/16
+inet_protocols = ipv4
+virtual_mailbox_domains = woodytoys.lab
+virtual_mailbox_maps = hash:/etc/postfix/vmailbox
+virtual_alias_maps = hash:/etc/postfix/virtual
+virtual_transport = dovecot
+smtpd_sender_login_maps = $virtual_mailbox_maps
+smtpd_sender_restrictions = reject_authenticated_sender_login_mismatch, permit_sasl_authenticated, reject_unauthenticated_sender_login_mismatch, permit_mynetworks, reject
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_local_domain = $myhostname
+smtpd_sasl_authenticated_header = yes
+smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination

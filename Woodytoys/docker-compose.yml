@@ -1,6 +1,7 @@
 version: '3'
 
 ##       Docker Networks Configuration      ##
+
 networks:
   trusted-zone:
     driver: bridge
@@ -22,6 +23,7 @@ networks:
         - subnet: 10.2.0.0/24
 
 ##       Docker Services Configuration      ##
+
 services:
   web-serveur:
     build:
@@ -49,11 +51,13 @@ services:
     container_name: soa-externe
 
   mail-serveur:
-    image: ubuntu
+    build:
+      context: ./DMZ/mail
+      dockerfile: Dockerfile
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.7
-    container_name: mail-serveur
+    container_name: mail-server
 
   soa-interne:
     build:
