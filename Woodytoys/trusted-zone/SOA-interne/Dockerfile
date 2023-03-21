@@ -1,7 +1,7 @@
 FROM ubuntu/bind9
 MAINTAINER Julien Claerhout <julienclaerhout@gmail.com>
 
-RUN apt-get update && apt-get install -y bind9 && apt install dnsutils -y
+RUN apt-get update && apt-get install -y bind9 && apt install dnsutils -y && apt install nano
 RUN mkdir /var/log/named
 
 COPY named.conf /etc/bind

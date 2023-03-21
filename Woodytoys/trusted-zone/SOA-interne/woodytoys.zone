@@ -1,19 +1,20 @@
-$ORIGIN internal.woodytoys.be.
-$TTL 86400	; 1 day
-@	IN SOA	ns.internal.woodytoys.be. hostmaster.woodytoys.be. (
-				2001062541 ; serial
-				21600      ; refresh (6 hours)
-				3600       ; retry (1 hour)
-				604800     ; expire (1 week)
-				86400      ; minimum (1 day)
-				)
+$ORIGIN .
+$TTL 86400  ; 1 day
+woodytoys.local	IN	SOA	resolveur.woodytoys.local. hostmaster.woodytoys.local. (
+			2001062541 ; serial
+			21600      ; refresh (6 hours)
+			3600       ; retry (1 hour)
+			604800     ; expire (1 week)
+			86400      ; minimum (1 day)
+			)
 
-		IN	NS	ns.internal.woodytoys.be.
-ns		IN	A	10.0.0.2
+		IN	NS	resolveur.woodytoys.local.
 
+$ORIGIN woodytoys.local.
+$TTL 86400  ;  1 day
 
-www			A	172.16.0.2
-soa-ext			A	172.16.0.3
-mail			A	172.16.0.4
-resolveur		A	10.0.0.3
-database		A	10.0.0.4
+soa		IN	A	10.0.0.2
+resolveur	IN	A	10.0.0.3
+www		IN	A	10.0.0.4
+db		IN	A	10.0.0.6
+mail		IN	A	10.0.0.7

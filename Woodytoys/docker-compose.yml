@@ -92,21 +92,3 @@ services:
     container_name: database
     volumes:
       - ./trusted-zone/db:/docker-entrypoint-initdb.d
-
-  employe1:
-    build:
-      context: ./woodytoys-zone/Employes
-      dockerfile: Dockerfile
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.5
-    container_name: employe1
-
-  employe2:
-    build:
-      context: ./woodytoys-zone/Employes
-      dockerfile: Dockerfile
-    networks:
-      DMZ:
-        ipv4_address: 172.16.0.5
-    container_name: employe2
