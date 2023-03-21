@@ -1,16 +1,16 @@
 $ORIGIN internal.woodytoys.be.
 $TTL 86400
-@     IN     SOA    soa.internal.woodytoys.be.     hostmaster.woodytoys.be. (
+@     IN     SOA    resolveur.internal.woodytoys.be.     hostmaster.woodytoys.be. (
                     2001062501 ; serial
                     21600      ; refresh after 6 hours
                     3600       ; retry after 1 hour
                     604800     ; expire after 1 week
                     86400 )    ; minimum TTL of 1 day
 
-      IN     NS     soa.internal.woodytoys.be.
+      IN     NS     resolveur.internal.woodytoys.be.
 
-soa	         IN  A	10.0.0.2
-resolveur	 IN	 A	10.0.0.3
-www		     IN	 A	10.0.0.4
-db		     IN	 A	10.0.0.6
-mail		 IN	 A	10.0.0.7
+soa		IN	A	10.0.0.2
+resolveur	IN	A	10.0.0.3
+www		IN	A	10.0.0.4
+db		IN	A	10.0.0.6
+mail		IN	A	10.0.0.7
