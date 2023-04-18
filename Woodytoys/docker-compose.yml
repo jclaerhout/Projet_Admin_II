@@ -62,8 +62,47 @@ services:
       - 10.0.0.3
     networks:
       trusted-zone:
-        ipv4_address: 10.0.0.7
+        ipv4_address: 10.0.0.11
     container_name: mail-server
+    hostname: localhost
+
+  contact:
+    build:
+      context: ./DMZ/mail/Client-mail
+      dockerfile: Dockerfile
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.12
+    tty: true
+
+  b2b:
+    build:
+      context: ./DMZ/mail/Client-b2b
+      dockerfile: Dockerfile
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.13
+    tty: true
+
+  postfix:
+    build:
+      context: ./DMZ/mail/smtp
+      dockerfile: Dockerfile
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.14
+    hostname: localhost
+
+  pop-imap:
+    build:
+      context: ./DMZ/mail/dovecot
+      dockerfile: Dockerfile
+    ports:
+      - 110:110
+      - 143:143 
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.15
 
   soa-interne:
     build:
