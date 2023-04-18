@@ -34,6 +34,8 @@ services:
     ports:
       - 80:80
       - 8080:8080
+    dns:
+      - 10.0.0.3
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.4
@@ -45,6 +47,8 @@ services:
 
   soa-externe:
     image: ubuntu/bind9
+    dns:
+      - 10.0.0.3
     networks:
       DMZ:
         ipv4_address: 172.16.0.3
@@ -54,6 +58,8 @@ services:
     build:
       context: ./DMZ/mail
       dockerfile: Dockerfile
+    dns:
+      - 10.0.0.3
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.7
@@ -63,6 +69,8 @@ services:
     build:
       context: ./trusted-zone/SOA-interne
       dockerfile: Dockerfile
+    dns:
+      - 10.0.0.3
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.2
@@ -72,6 +80,8 @@ services:
     build:
       context: ./trusted-zone/resolveur
       dockerfile: Dockerfile
+    dns:
+      - 10.0.0.3
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.3
@@ -84,6 +94,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3306:3306"
+    dns:
+      - 10.0.0.3
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.6
@@ -101,6 +113,8 @@ services:
     build:
       context: ./woodytoys-zone/Employes
       dockerfile: Dockerfile
+    dns:
+      - 10.0.0.3
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.20
@@ -110,6 +124,8 @@ services:
     build:
       context: ./woodytoys-zone/Employes
       dockerfile: Dockerfile
+    dns:
+      - 10.0.0.3
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.21
