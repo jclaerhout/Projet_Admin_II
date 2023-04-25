@@ -9,25 +9,55 @@ networks:
       driver: default
       config:
         - subnet: 10.0.0.0/24
-  DMZ:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.16.0.0/24
   zone-woodytoys:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: 10.2.0.0/24
+        - subnet: 10.1.0.0/24
+  database-zone:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet:10.2.0.0/24
+  DMZ:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.3.0.0/24
 
 ##       Docker Services Configuration      ##
 
 services:
-  web-serveur:
+
+  ##       Trusted zone services      ##
+  soa-interne:
     build:
-      context: ./DMZ/web
+      context: ./trusted-zone/soa-interne
+      dockerfile: Dockerfile
+    dns:
+      - 10.0.0.3
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.2
+    container_name: soa-interne
+  
+  resolver:
+    build:
+      context: ./trusted-zone/resolveur
+      dockerfile: Dockerfile
+    dns:
+      - 10.0.0.3
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.3
+    container_name: resolver
+
+  web-interne:
+    build:
+      context: ./trusted-zone/web-interne
       dockerfile: Dockerfile
     hostname: www
     domainname: woodytoys.be
@@ -41,9 +71,64 @@ services:
         ipv4_address: 10.0.0.4
     links:
       - database
-    container_name: web-serveur
+    container_name: web-interne
     volumes:
       - ./DMZ/web/php/src:/var/www/html/
+
+  ##          Woodytoys zone services         ##
+  employe1:
+  build:
+    context: ./woodytoys-zone/Employes
+    dockerfile: Dockerfile
+  dns:
+    - 10.0.0.3
+  networks:
+    trusted-zone:
+      ipv4_address: 10.0.0.20
+  container_name: employe1
+
+employe2:
+  build:
+    context: ./woodytoys-zone/Employes
+    dockerfile: Dockerfile
+  dns:
+    - 10.0.0.3
+  networks:
+    trusted-zone:
+      ipv4_address: 10.0.0.21
+  container_name: employe2
+
+  ##          Database zone services         ##
+  database:
+    image: mysql
+    build:
+      context: ./database-zone/db
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    dns:
+      - 10.0.0.3
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.6
+    environment:
+      MYSQL_DATABASE : woodytoys_db
+      MYSQL_ROOT_PASSWORD: 'admin'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'admin'
+    container_name: database
+    volumes:
+      - ./database-zone/db:/docker-entrypoint-initdb.d
+
+  ##          Dmz services         ##
+  web-externe:
+    image: ubuntu/bind9
+    dns:
+      - 10.0.0.3
+    networks:
+      DMZ:
+        ipv4_address: 10.3.0.2
+    container_name: web-externe
 
   soa-externe:
     image: ubuntu/bind9
@@ -51,12 +136,12 @@ services:
       - 10.0.0.3
     networks:
       DMZ:
-        ipv4_address: 172.16.0.3
+        ipv4_address: 10.3.0.3
     container_name: soa-externe
 
   mail-serveur:
     build:
-      context: ./DMZ/mail
+      context: ./dmz/mail
       dockerfile: Dockerfile
     dns:
       - 10.0.0.3
@@ -103,69 +188,3 @@ services:
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.15
-
-  soa-interne:
-    build:
-      context: ./trusted-zone/SOA-interne
-      dockerfile: Dockerfile
-    dns:
-      - 10.0.0.3
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.2
-    container_name: soa-interne
-  
-  resolver:
-    build:
-      context: ./trusted-zone/resolveur
-      dockerfile: Dockerfile
-    dns:
-      - 10.0.0.3
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.3
-    container_name: resolver
-  
-  database:
-    image: mysql
-    build:
-      context: ./trusted-zone/db
-      dockerfile: Dockerfile
-    ports:
-      - "3306:3306"
-    dns:
-      - 10.0.0.3
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.6
-    environment:
-      MYSQL_DATABASE : woodytoys_db
-      MYSQL_ROOT_PASSWORD: 'admin'
-      MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: 'admin'
-    restart: always
-    container_name: database
-    volumes:
-      - ./trusted-zone/db:/docker-entrypoint-initdb.d
-
-  employe1:
-    build:
-      context: ./woodytoys-zone/Employes
-      dockerfile: Dockerfile
-    dns:
-      - 10.0.0.3
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.20
-    container_name: employe1
-
-  employe2:
-    build:
-      context: ./woodytoys-zone/Employes
-      dockerfile: Dockerfile
-    dns:
-      - 10.0.0.3
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.21
-    container_name: employe2
