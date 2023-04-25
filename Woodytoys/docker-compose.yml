@@ -20,7 +20,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet:10.2.0.0/24
+        - subnet: 10.2.0.0/24
   DMZ:
     driver: bridge
     ipam:
@@ -77,26 +77,26 @@ services:
 
   ##          Woodytoys zone services         ##
   employe1:
-  build:
-    context: ./woodytoys-zone/Employes
-    dockerfile: Dockerfile
-  dns:
-    - 10.0.0.3
-  networks:
-    trusted-zone:
-      ipv4_address: 10.0.0.20
-  container_name: employe1
+    build:
+      context: ./woodytoys-zone/Employes
+      dockerfile: Dockerfile
+    dns:
+      - 10.0.0.3
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.20
+    container_name: employe1
 
-employe2:
-  build:
-    context: ./woodytoys-zone/Employes
-    dockerfile: Dockerfile
-  dns:
-    - 10.0.0.3
-  networks:
-    trusted-zone:
-      ipv4_address: 10.0.0.21
-  container_name: employe2
+  employe2:
+    build:
+      context: ./woodytoys-zone/Employes
+      dockerfile: Dockerfile
+    dns:
+      - 10.0.0.3
+    networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.21
+    container_name: employe2
 
   ##          Database zone services         ##
   database:
@@ -122,7 +122,7 @@ employe2:
 
   ##          Dmz services         ##
   web-externe:
-    image: ubuntu/bind9
+    image: php:8.0-apache
     dns:
       - 10.0.0.3
     networks:
