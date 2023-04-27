@@ -74,6 +74,7 @@ services:
       trusted-zone:
         ipv4_address: 10.0.0.12
     tty: true
+    container_name: contact
 
   b2b:
     build:

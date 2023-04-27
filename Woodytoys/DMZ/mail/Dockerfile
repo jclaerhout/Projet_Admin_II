@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-# installation des dépendances postfix & dovecot
+# installation des dependances postfix & dovecot
 RUN apt-get update
     
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y postfix dovecot-core dovecot-imapd dovecot-pop3d telnet net-tools
@@ -16,8 +16,4 @@ COPY dovecot/dovecot.conf /etc/dovecot/dovecot.conf
 
 EXPOSE 25 143 465 587 993
 
-CMD ["postfix", "start"]
-
-CMD ["service", "dovecot", "start"]
-
-CMD ["sh", "-c", "tail -f /var/log/mail.log"]
+CMD ["/bin/bash", "-c", "/usr/sbin/postfix start && /usr/sbin/dovecot -F"] 
