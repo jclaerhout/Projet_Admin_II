@@ -21,7 +21,7 @@ networks:
       driver: default
       config:
         - subnet: 10.2.0.0/24
-  DMZ:
+  dmz:
     driver: bridge
     ipam:
       driver: default
@@ -73,7 +73,7 @@ services:
       - database
     container_name: web-interne
     volumes:
-      - ./DMZ/web/php/src:/var/www/html/
+      - ./trusted-zone/web-interne/php/src:/var/www/html/
 
   ##          Woodytoys zone services         ##
   employe1:
@@ -123,20 +123,21 @@ services:
   ##          Dmz services         ##
   web-externe:
     image: php:8.0-apache
-    dns:
-      - 10.0.0.3
     networks:
-      DMZ:
-        ipv4_address: 10.3.0.2
+      trusted-zone:
+        ipv4_address: 10.0.0.7
     container_name: web-externe
 
   soa-externe:
-    image: ubuntu/bind9
-    dns:
-      - 10.0.0.3
+    build:
+      context: ./dmz/soa-externe
+      dockerfile: Dockerfile
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
     networks:
-      DMZ:
-        ipv4_address: 10.3.0.3
+      trusted-zone:
+        ipv4_address: 10.0.0.8
     container_name: soa-externe
 
   mail-serveur:
@@ -153,7 +154,7 @@ services:
 
   contact:
     build:
-      context: ./DMZ/mail/Client-mail
+      context: ./dmz/mail/Client-mail
       dockerfile: Dockerfile
     networks:
       trusted-zone:
@@ -162,7 +163,7 @@ services:
 
   b2b:
     build:
-      context: ./DMZ/mail/Client-b2b
+      context: ./dmz/mail/Client-b2b
       dockerfile: Dockerfile
     networks:
       trusted-zone:
@@ -171,7 +172,7 @@ services:
 
   postfix:
     build:
-      context: ./DMZ/mail/smtp
+      context: ./dmz/mail/smtp
       dockerfile: Dockerfile
     networks:
       trusted-zone:
@@ -180,7 +181,7 @@ services:
 
   pop-imap:
     build:
-      context: ./DMZ/mail/dovecot
+      context: ./dmz/mail/dovecot
       dockerfile: Dockerfile
     ports:
       - 110:110

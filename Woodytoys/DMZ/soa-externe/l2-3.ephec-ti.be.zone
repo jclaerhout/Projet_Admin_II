@@ -1,0 +1,25 @@
+$TTL 86400
+@       IN      SOA     ns.l2-3.ephec-ti.be. j.claerhout.students.ephec.be. (
+                        2021051752           ; Serial
+                        43200                ; Refresh
+                        7200                 ; Retry
+                        2419200              ; Expire
+                        86400 )              ; Negative Cache TTL
+
+; NS configs
+            IN      NS      ns.l2-3.ephec-ti.be.
+            IN      MX      10  mail
+ns          IN      A       ???
+
+;serveurs --> IP pour service Web
+b2b         IN      A       ???
+www         IN      A       ???
+
+;serveurs --> adresses IP pour service Mail
+mail        IN      A       ???
+@           IN      NS      ns
+            IN      A       ???
+            IN      MX      10      mail
+            
+            
+???.in-addr.arpa.   IN      PTR     mail.l2-3.ephec-ti.be
