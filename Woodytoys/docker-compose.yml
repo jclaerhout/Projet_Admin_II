@@ -89,7 +89,8 @@ services:
     networks:
       woodytoys-zone:
         ipv4_address: 10.1.0.3
-    container_name: employe2
+    tty: true
+    container_name: contact
 
   ##          Database zone services         ##
   database:

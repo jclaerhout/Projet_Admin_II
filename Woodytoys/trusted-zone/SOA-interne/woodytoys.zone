@@ -13,4 +13,4 @@ soa		IN	A	10.0.0.2
 resolveur	IN	A	10.0.0.3
 www		IN	A	10.0.0.4
 db		IN	A	10.0.0.6
-mail		IN	A	10.0.0.7
+mail		IN	A	10.0.0.11

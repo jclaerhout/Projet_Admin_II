@@ -11,6 +11,8 @@ RUN apt-get install -y iputils-ping
 RUN apt-get install -y telnet
 RUN apt-get install -y dnsutils
 RUN apt-get install -y links
+RUN apt-get install -y sudo
+RUN apt-get install -y nano
 RUN useradd -m -p contact contact
 
 COPY .muttrc /home/contact/
