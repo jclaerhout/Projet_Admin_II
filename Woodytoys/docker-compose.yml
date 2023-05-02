@@ -9,108 +9,37 @@ networks:
       driver: default
       config:
         - subnet: 10.0.0.0/24
-  DMZ:
+
+  woodytoys-zone:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: 172.16.0.0/24
-  zone-woodytoys:
+        - subnet: 10.1.0.0/24
+
+  database-zone:
     driver: bridge
     ipam:
       driver: default
       config:
         - subnet: 10.2.0.0/24
+        
+  dmz:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.3.0.0/24
 
 ##       Docker Services Configuration      ##
 
 services:
-  web-serveur:
-    build:
-      context: ./DMZ/web
-      dockerfile: Dockerfile
-    hostname: www
-    domainname: woodytoys.be
-    ports:
-      - 80:80
-      - 8080:8080
-    dns:
-      - 10.0.0.3
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.4
-    links:
-      - database
-    container_name: web-serveur
-    volumes:
-      - ./DMZ/web/php/src:/var/www/html/
 
-  soa-externe:
-    image: ubuntu/bind9
-    dns:
-      - 10.0.0.3
-    networks:
-      DMZ:
-        ipv4_address: 172.16.0.3
-    container_name: soa-externe
-
-  mail-serveur:
-    build:
-      context: ./DMZ/mail
-      dockerfile: Dockerfile
-    dns:
-      - 10.0.0.3
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.11
-    container_name: mail-server
-    hostname: localhost
-
-  contact:
-    build:
-      context: ./DMZ/mail/Client-mail
-      dockerfile: Dockerfile
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.12
-    tty: true
-    container_name: contact
-
-  b2b:
-    build:
-      context: ./DMZ/mail/Client-b2b
-      dockerfile: Dockerfile
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.13
-    tty: true
-
-  postfix:
-    build:
-      context: ./DMZ/mail/smtp
-      dockerfile: Dockerfile
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.14
-    hostname: localhost
-
-  pop-imap:
-    build:
-      context: ./DMZ/mail/dovecot
-      dockerfile: Dockerfile
-    ports:
-      - 110:110
-      - 143:143 
-    networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.15
-
+  ##       Trusted zone services      ##
   soa-interne:
     build:
-      context: ./trusted-zone/SOA-interne
+      context: ./trusted-zone/soa-interne
       dockerfile: Dockerfile
-    dns:
-      - 10.0.0.3
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.2
@@ -120,53 +49,133 @@ services:
     build:
       context: ./trusted-zone/resolveur
       dockerfile: Dockerfile
-    dns:
-      - 10.0.0.3
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.3
     container_name: resolver
-  
-  database:
-    image: mysql
+
+  web-interne:
     build:
-      context: ./trusted-zone/db
+      context: ./trusted-zone/web-interne
       dockerfile: Dockerfile
+    hostname: www
+    domainname: woodytoys.be
     ports:
-      - "3306:3306"
-    dns:
-      - 10.0.0.3
+      - 80:80
+      - 8080:8080
     networks:
       trusted-zone:
-        ipv4_address: 10.0.0.6
-    environment:
-      MYSQL_DATABASE : woodytoys_db
-      MYSQL_ROOT_PASSWORD: 'admin'
-      MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: 'admin'
-    restart: always
-    container_name: database
+        ipv4_address: 10.0.0.4
+    links:
+      - database
+    container_name: web-interne
     volumes:
-      - ./trusted-zone/db:/docker-entrypoint-initdb.d
+      - ./trusted-zone/web-interne/php/src:/var/www/html/
 
+  ##          Woodytoys zone services         ##
   employe1:
     build:
       context: ./woodytoys-zone/Employes
       dockerfile: Dockerfile
-    dns:
-      - 10.0.0.3
     networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.20
+      woodytoys-zone:
+        ipv4_address: 10.1.0.2
     container_name: employe1
 
   employe2:
     build:
       context: ./woodytoys-zone/Employes
       dockerfile: Dockerfile
-    dns:
-      - 10.0.0.3
     networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.21
-    container_name: employe2
+      woodytoys-zone:
+        ipv4_address: 10.1.0.3
+    tty: true
+    container_name: contact
+
+  ##          Database zone services         ##
+  database:
+    image: mysql
+    build:
+      context: ./database-zone/db
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    networks:
+      database-zone:
+        ipv4_address: 10.2.0.2
+    environment:
+      MYSQL_DATABASE : woodytoys_db
+      MYSQL_ROOT_PASSWORD: 'admin'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'admin'
+    container_name: database
+    volumes:
+      - ./database-zone/db:/docker-entrypoint-initdb.d
+
+  ##          Dmz services         ##
+  web-externe:
+    image: php:8.0-apache
+    networks:
+      dmz:
+        ipv4_address: 10.3.0.2
+    container_name: web-externe
+
+  soa-externe:
+    build:
+      context: ./dmz/soa-externe
+      dockerfile: Dockerfile
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    networks:
+      dmz:
+        ipv4_address: 10.3.0.3
+    container_name: soa-externe
+
+  mail-serveur:
+    build:
+      context: ./dmz/mail
+      dockerfile: Dockerfile
+    networks:
+      dmz:
+        ipv4_address: 10.3.0.4
+    container_name: mail-server
+    hostname: localhost
+
+  contact:
+    build:
+      context: ./dmz/mail/Client-mail
+      dockerfile: Dockerfile
+    networks:
+      dmz:
+        ipv4_address: 10.3.0.5
+    tty: true
+
+  b2b:
+    build:
+      context: ./dmz/mail/Client-b2b
+      dockerfile: Dockerfile
+    networks:
+      dmz:
+        ipv4_address: 10.3.0.6
+    tty: true
+
+  postfix:
+    build:
+      context: ./dmz/mail/smtp
+      dockerfile: Dockerfile
+    networks:
+      dmz:
+        ipv4_address: 10.3.0.7
+    hostname: localhost
+
+  pop-imap:
+    build:
+      context: ./dmz/mail/dovecot
+      dockerfile: Dockerfile
+    ports:
+      - 110:110
+      - 143:143 
+    networks:
+      dmz:
+        ipv4_address: 10.3.0.8
