@@ -7,7 +7,4 @@ COPY named.conf /etc/bind
 COPY woodytoys.zone /etc/bind
 COPY woodytoys.reverse.zone /etc/bind
 
-EXPOSE 53/udp
-EXPOSE 53/tcp
-
 CMD ["named", " -g"]
