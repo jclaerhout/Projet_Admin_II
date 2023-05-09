@@ -78,13 +78,10 @@ services:
       context: ./woodytoys-zone/Employes
       dockerfile: Dockerfile
     networks:
-<<<<<<< Updated upstream
-=======
       trusted-zone:
         ipv4_address: 10.0.0.10
       dmz: 
         ipv4_address: 10.3.0.10
->>>>>>> Stashed changes
       woodytoys-zone:
         ipv4_address: 10.1.0.2
     container_name: employe1
@@ -174,32 +171,9 @@ services:
       dmz:
         ipv4_address: 10.3.0.6
     tty: true
-<<<<<<< Updated upstream
-
-  postfix:
-    build:
-      context: ./dmz/mail/smtp
-      dockerfile: Dockerfile
-    networks:
-      dmz:
-        ipv4_address: 10.3.0.7
-    hostname: localhost
-
-  pop-imap:
-    build:
-      context: ./dmz/mail/dovecot
-      dockerfile: Dockerfile
-    ports:
-      - 110:110
-      - 143:143 
-    networks:
-      dmz:
-        ipv4_address: 10.3.0.8
-=======
     dns: 10.0.0.3
 
 ##       Docker Volumes      ##
 
 volumes:
   db:
->>>>>>> Stashed changes
