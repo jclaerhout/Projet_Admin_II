@@ -40,6 +40,8 @@ services:
     build:
       context: ./trusted-zone/SOA-interne
       dockerfile: Dockerfile
+    ports:
+      []
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.2
@@ -49,6 +51,8 @@ services:
     build:
       context: ./trusted-zone/resolveur
       dockerfile: Dockerfile
+    ports:
+      []
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.3
