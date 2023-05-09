@@ -13,7 +13,7 @@ RUN apt-get install -y dnsutils
 RUN apt-get install -y links
 RUN apt-get install -y sudo
 RUN apt-get install -y nano
-RUN useradd -m -p contact contact
+RUN useradd -rm -p $(openssl passwd -1 contact) contact
 
 COPY .muttrc /home/contact/
 
