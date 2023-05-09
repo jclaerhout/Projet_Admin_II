@@ -12,8 +12,8 @@ $TTL 86400
 ns          IN      A       35.205.9.23
 
 ; web service configs
-b2b         IN      A       35.205.9.25
-www         IN      A       35.205.9.25
+b2b         IN      A       35.205.9.23
+www         IN      A       35.205.9.23
 
 ; mail service configs
 mail        IN      A       35.205.9.23

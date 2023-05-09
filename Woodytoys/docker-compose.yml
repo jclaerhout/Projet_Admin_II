@@ -38,8 +38,10 @@ services:
   ##       Trusted zone services      ##
   soa-interne:
     build:
-      context: ./trusted-zone/soa-interne
+      context: ./trusted-zone/SOA-interne
       dockerfile: Dockerfile
+    ports:
+      []
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.2
@@ -49,6 +51,8 @@ services:
     build:
       context: ./trusted-zone/resolveur
       dockerfile: Dockerfile
+    ports:
+      []
     networks:
       trusted-zone:
         ipv4_address: 10.0.0.3
@@ -61,9 +65,10 @@ services:
     hostname: www
     domainname: woodytoys.be
     ports:
-      - 80:80
-      - 8080:8080
+      - 81:80
     networks:
+      database-zone:
+        ipv4_address:	10.2.0.3
       trusted-zone:
         ipv4_address: 10.0.0.4
     links:
@@ -78,6 +83,8 @@ services:
       context: ./woodytoys-zone/Employes
       dockerfile: Dockerfile
     networks:
+      dmz: 
+        ipv4_address: 10.3.0.10
       woodytoys-zone:
         ipv4_address: 10.1.0.2
     container_name: employe1
@@ -87,6 +94,8 @@ services:
       context: ./woodytoys-zone/Employes
       dockerfile: Dockerfile
     networks:
+      trusted-zone:
+        ipv4_address: 10.0.0.5
       woodytoys-zone:
         ipv4_address: 10.1.0.3
     tty: true
@@ -101,6 +110,8 @@ services:
     ports:
       - "3306:3306"
     networks:
+      dmz: 
+        ipv4_address: 10.3.0.9
       database-zone:
         ipv4_address: 10.2.0.2
     environment:
@@ -110,19 +121,26 @@ services:
       MYSQL_PASSWORD: 'admin'
     container_name: database
     volumes:
-      - ./database-zone/db:/docker-entrypoint-initdb.d
+      - ./database-zone/db:/data/db
 
   ##          Dmz services         ##
+
   web-externe:
-    image: php:8.0-apache
+    build:
+      context: ./DMZ/web-externe
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
     networks:
       dmz:
         ipv4_address: 10.3.0.2
+    links:
+      - database
     container_name: web-externe
 
   soa-externe:
     build:
-      context: ./dmz/soa-externe
+      context: ./DMZ/soa-externe
       dockerfile: Dockerfile
     ports:
       - "53:53/tcp"
@@ -134,7 +152,7 @@ services:
 
   mail-serveur:
     build:
-      context: ./dmz/mail
+      context: ./DMZ/mail
       dockerfile: Dockerfile
     networks:
       dmz:
@@ -144,7 +162,7 @@ services:
 
   contact:
     build:
-      context: ./dmz/mail/Client-mail
+      context: ./DMZ/mail/Client-mail
       dockerfile: Dockerfile
     networks:
       dmz:
@@ -153,7 +171,7 @@ services:
 
   b2b:
     build:
-      context: ./dmz/mail/Client-b2b
+      context: ./DMZ/mail/Client-b2b
       dockerfile: Dockerfile
     networks:
       dmz:
@@ -162,7 +180,7 @@ services:
 
   postfix:
     build:
-      context: ./dmz/mail/smtp
+      context: ./DMZ/mail/smtp
       dockerfile: Dockerfile
     networks:
       dmz:
@@ -171,7 +189,7 @@ services:
 
   pop-imap:
     build:
-      context: ./dmz/mail/dovecot
+      context: ./DMZ/mail/dovecot
       dockerfile: Dockerfile
     ports:
       - 110:110
@@ -179,3 +197,8 @@ services:
     networks:
       dmz:
         ipv4_address: 10.3.0.8
+
+##       Docker Volumes      ##
+
+volumes:
+  db:

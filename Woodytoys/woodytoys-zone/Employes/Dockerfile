@@ -1,13 +1,15 @@
-FROM ubuntu/bind9
+FROM ubuntu:latest
 
 RUN apt update
 
 RUN apt install dnsutils -y
 RUN apt install iputils-ping -y
+RUN apt install nano -y
 RUN apt install net-tools -y
 RUN apt install lynx -y
-RUN apt install nano
+RUN apt update
+RUN apt install mutt -y
 
 COPY resolv.conf /etc
 
-CMD ["named", "-g"]
+CMD tail -f /dev/null
