@@ -9,14 +9,14 @@ $TTL 86400
 ; NS configs
             IN      NS      ns.l2-3.ephec-ti.be.
             IN      MX      10      mail
-ns          IN      A       35.205.9.23
+ns          IN      A       34.77.174.150
 
 ; web service configs
-b2b         IN      A       35.205.9.23
-www         IN      A       35.205.9.23
+b2b         IN      A       34.77.174.150
+www         IN      A       34.77.174.150
 
 ; mail service configs
-mail        IN      A       35.205.9.23
+mail        IN      A       34.77.174.150
 @           IN      NS      ns
-            IN      A       35.205.9.23
+            IN      A       34.77.174.150
             IN      MX      10      mail

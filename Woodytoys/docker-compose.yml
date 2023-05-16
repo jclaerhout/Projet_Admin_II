@@ -68,7 +68,7 @@ services:
       - 81:80
     networks:
       database-zone:
-        ipv4_address:	10.2.0.3
+        ipv4_address: 10.2.0.3
       trusted-zone:
         ipv4_address: 10.0.0.4
     links:
