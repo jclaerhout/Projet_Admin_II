@@ -19,3 +19,4 @@ mail         IN     A       34.77.174.150
 imap         IN     CNAME   mail
 pop3         IN     CNAME   mail
 smtp         IN     CNAME   mail
+
