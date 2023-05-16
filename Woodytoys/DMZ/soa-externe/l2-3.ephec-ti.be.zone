@@ -1,22 +1,21 @@
+$ORIGIN l2-3.ephec-ti.be.
 $TTL 86400
-@       IN      SOA     ns.l2-3.ephec-ti.be. j.claerhout.students.ephec.be. (
-                        2021051752           ; Serial
-                        43200                ; Refresh
-                        7200                 ; Retry
-                        2419200              ; Expire
-                        86400 )              ; Negative Cache TTL
+@       IN      SOA     soa.l2-3.ephec-ti.be. j.claerhout.students.ephec.be. (
+                    2001062501 ; serial
+                    21600      ; refresh after 6 hours
+                    3600       ; retry after 1 hour
+                    604800     ; expire after 1 week
+                    86400 )    ; minimum TTL of 1 day
 
-; NS configs
-            IN      NS      ns.l2-3.ephec-ti.be.
-            IN      MX      10      mail
-ns          IN      A       35.205.9.23
+      IN     NS     ns.l2-3.ephec-ti.be.
+      IN     MX     10     mail.l2-3.ephec-ti.be.
 
-; web service configs
-b2b         IN      A       35.205.9.23
-www         IN      A       35.205.9.23
 
-; mail service configs
-mail        IN      A       35.205.9.23
-@           IN      NS      ns
-            IN      A       35.205.9.23
-            IN      MX      10      mail
+ns           IN     A       34.77.174.150
+b2b          IN     A       34.77.174.150
+www          IN     A       34.77.174.150
+mail         IN     A       34.77.174.150
+
+imap         IN     CNAME   mail
+pop3         IN     CNAME   mail
+smtp         IN     CNAME   mail

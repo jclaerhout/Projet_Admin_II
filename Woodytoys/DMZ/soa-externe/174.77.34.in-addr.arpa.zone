@@ -1,0 +1,15 @@
+$ORIGIN 174.77.34.in-addr.arpa.
+$TTL 86400
+@    IN     SOA     ns.l2-3.ephec-ti.be. j.claerhout.students.ephec.be. (
+                    2001062501 ; serial
+                    21600      ; refresh after 6 hours
+                    3600       ; retry after 1 hour
+                    604800     ; expire after 1 week
+                    86400 )    ; minimum TTL of 1 day
+
+     IN     NS     ns.l2-3.ephec-ti.be.
+
+150    IN     PTR    ns.l2-3.ephec-ti.be.
+150    IN     PTR    b2b.l2-3.ephec-ti.be.
+150    IN     PTR    www.l2-3.ephec-ti.be.
+150    IN     PTR    mail.l2-3.ephec-ti.be.
