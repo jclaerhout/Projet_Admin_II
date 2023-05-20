@@ -119,6 +119,10 @@ services:
       MYSQL_ROOT_PASSWORD: 'admin'
       MYSQL_USER: 'admin'
       MYSQL_PASSWORD: 'admin'
+      #MYSQL_DATABASE : ${MYSQL_DATABASE}
+      #MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      #MYSQL_USER: ${MYSQL_USER}
+      #MYSQL_PASSWORD: ${MYSQL_DATABASE}
     container_name: database
     volumes:
       - ./database-zone/db:/data/db
@@ -131,6 +135,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 80:80
+      - 443:443
     networks:
       dmz:
         ipv4_address: 10.3.0.2
