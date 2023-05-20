@@ -13,7 +13,7 @@ COPY ./config/apache2.conf /etc/apache2/
 COPY ./config/sites/b2b.conf /etc/apache2/sites-available/
 COPY ./config/sites/vitrine.conf /etc/apache2/sites-available/
 
-COPY ./../../../../ssl /etc/ssl
+COPY ./../../../../../../ssl /etc/ssl
 
 RUN a2dissite 000-default.conf
 
