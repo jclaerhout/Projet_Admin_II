@@ -46,7 +46,7 @@ services:
       trusted-zone:
         ipv4_address: 10.0.0.2
     container_name: soa-interne
-  
+
   resolver:
     build:
       context: ./trusted-zone/resolveur
@@ -83,7 +83,7 @@ services:
       context: ./woodytoys-zone/Employes
       dockerfile: Dockerfile
     networks:
-      dmz: 
+      dmz:
         ipv4_address: 10.3.0.10
       woodytoys-zone:
         ipv4_address: 10.1.0.2

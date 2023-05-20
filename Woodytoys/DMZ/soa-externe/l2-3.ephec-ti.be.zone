@@ -11,10 +11,10 @@ $TTL 86400
       IN     MX     10     mail.l2-3.ephec-ti.be.
 
 
-ns           IN     A       34.77.174.150
-b2b          IN     A       34.77.174.150
-www          IN     A       34.77.174.150
-mail         IN     A       34.77.174.150
+ns           IN     A       35.205.56.229
+b2b          IN     A       35.205.56.229
+www          IN     A       35.205.56.229
+mail         IN     A       35.205.56.229
 
 imap         IN     CNAME   mail
 pop3         IN     CNAME   mail
