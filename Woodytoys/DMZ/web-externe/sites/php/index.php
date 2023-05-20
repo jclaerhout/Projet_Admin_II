@@ -13,18 +13,18 @@
 $host = 'database';
 
 // Database use name
-$user = 'admin';
+$user = 'userphp';
 
 //database user password
-$pass = 'admin';
-
+$pass = 'Br94Phz}EP~x3d:/QSq;';
+ 
 // database name
 $mydatabase = 'woodytoys_db';
 
 // check the MySQL connection status
 $conn = new mysqli($host, $user, $pass, $mydatabase);
 
-$sql = 'SELECT * FROM Produits';
+$sql = 'CALL getProduits();';
 
 if ($result = $conn->query($sql)){
     while ($data = $result->fetch_object()) {
