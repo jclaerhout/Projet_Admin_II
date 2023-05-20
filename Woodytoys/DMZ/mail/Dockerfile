@@ -1,19 +1,27 @@
-FROM ubuntu:latest
-# installation des dependances postfix & dovecot
+FROM dovecot/dovecot
+
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update
-    
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y postfix dovecot-core dovecot-imapd dovecot-pop3d telnet net-tools
-    
-RUN apt-get clean
+RUN apt-get install -y --no-install-recommends apt-utils
+RUN apt-get install -y postfix
+RUN apt-get install -y systemctl
+RUN apt-get install -y mailutils
+RUN apt-get install -y iputils-ping
+RUN apt-get install -y telnet
 
-RUN adduser test
-
-RUN touch /var/log/mail.log
-    
 COPY postfix/main.cf/  /etc/postfix/main.cf
-
 COPY dovecot/dovecot.conf /etc/dovecot/dovecot.conf
+COPY start.sh ./
 
-EXPOSE 25 143 465 587 993
+RUN chmod 111 start.sh
 
-CMD ["/bin/bash", "-c", "/usr/sbin/postfix start && /usr/sbin/dovecot -F"] 
+RUN useradd -rm -p $(openssl passwd -1 contact) contact
+RUN useradd -rm -p $(openssl passwd -1 b2b) b2b
+
+
+EXPOSE 25
+EXPOSE 110
+EXPOSE 143
+
+CMD ./start.sh ; sleep infinity

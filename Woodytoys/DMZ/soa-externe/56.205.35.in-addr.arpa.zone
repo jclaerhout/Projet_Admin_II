@@ -12,4 +12,4 @@ $TTL 86400
 229    IN     PTR    ns.l2-3.ephec-ti.be.
 229    IN     PTR    b2b.l2-3.ephec-ti.be.
 229    IN     PTR    www.l2-3.ephec-ti.be.
-229    IN     PTR    mail.l2-3.ephec-ti.be.
+4    IN     PTR    mail.l2-3.ephec-ti.be.
