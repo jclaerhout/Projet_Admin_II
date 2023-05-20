@@ -16,6 +16,8 @@ COPY ./config/sites/vitrine.conf /etc/apache2/sites-available/
 COPY ./ssl/ /etc/ssl/
 RUN a2enmod ssl
 
+RUN a2enmod rewrite
+
 RUN a2dissite 000-default.conf
 
 RUN a2ensite vitrine.conf   
