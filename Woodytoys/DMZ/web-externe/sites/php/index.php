@@ -11,16 +11,16 @@
 
 // The MySQL service named in the docker-compose.yml.
 //$host = 'database';
-$host = getenv('HOST')
+$host = getenv('HOST');
 
 // Database use name
-$user = getenv('USER')
+$user = getenv('USER');
 
 //database user password
-$pass = getenv('PASS')
+$pass = getenv('PASS');
  
 // database name
-$mydatabase = getenv('MYDATABASE')
+$mydatabase = getenv('MYDATABASE');
 
 // check the MySQL connection status
 $conn = new mysqli($host, $user, $pass, $mydatabase);
