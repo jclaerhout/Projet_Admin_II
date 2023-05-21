@@ -137,9 +137,12 @@ services:
         ipv4_address: 10.3.0.2
     links:
       - database
+    environment:
+      HOST : ${HOST}
+      USER: ${USER}
+      PASS: ${PASS}
+      MYDATABASE: ${MYDATABASE}
     container_name: web-externe
-    env_file:
-      - .env
 
   soa-externe:
     build:

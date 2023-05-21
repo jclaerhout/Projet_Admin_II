@@ -14,15 +14,12 @@
 $host = getenv('HOST')
 
 // Database use name
-//$user = 'userphp';
 $user = getenv('USER')
 
 //database user password
-//$pass = 'Br94Phz}EP~x3d:/QSq;';
 $pass = getenv('PASS')
  
 // database name
-//$mydatabase = 'woodytoys_db';
 $mydatabase = getenv('MYDATABASE')
 
 // check the MySQL connection status
