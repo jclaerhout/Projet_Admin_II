@@ -114,14 +114,11 @@ services:
         ipv4_address: 10.3.0.9
       database-zone:
         ipv4_address: 10.2.0.2
-    environment:
-      MYSQL_DATABASE : ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_DATABASE}
     container_name: database
     volumes:
       - ./database-zone/db:/data/db
+    env_file:
+      - .env
 
   ##          Dmz services         ##
 
@@ -137,12 +134,9 @@ services:
         ipv4_address: 10.3.0.2
     links:
       - database
-    environment:
-      HOST : ${HOST}
-      USER: ${USER}
-      PASS: ${PASS}
-      MYDATABASE: ${MYDATABASE}
     container_name: web-externe
+    env_file:
+      - .env
 
   soa-externe:
     build:
