@@ -10,16 +10,20 @@
 //These are the defined authentication environment in the db service
 
 // The MySQL service named in the docker-compose.yml.
-$host = 'database';
+//$host = 'database';
+$host = getenv('HOST')
 
 // Database use name
-$user = 'userphp';
+//$user = 'userphp';
+$user = getenv('USER')
 
 //database user password
-$pass = 'Br94Phz}EP~x3d:/QSq;';
+//$pass = 'Br94Phz}EP~x3d:/QSq;';
+$pass = getenv('PASS')
  
 // database name
-$mydatabase = 'woodytoys_db';
+//$mydatabase = 'woodytoys_db';
+$mydatabase = getenv('MYDATABASE')
 
 // check the MySQL connection status
 $conn = new mysqli($host, $user, $pass, $mydatabase);

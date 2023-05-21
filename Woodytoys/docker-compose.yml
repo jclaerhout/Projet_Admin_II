@@ -138,6 +138,8 @@ services:
     links:
       - database
     container_name: web-externe
+    env_file:
+      - .env
 
   soa-externe:
     build:
