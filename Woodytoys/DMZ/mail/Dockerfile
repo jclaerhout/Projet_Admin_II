@@ -12,7 +12,7 @@ RUN apt-get install -y telnet
 
 COPY postfix/main.cf/  /etc/postfix/main.cf
 COPY dovecot/dovecot.conf /etc/dovecot/dovecot.conf
-COPY start.sh ./
+COPY start.sh .
 
 RUN chmod 111 start.sh
 

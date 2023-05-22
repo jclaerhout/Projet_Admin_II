@@ -5,7 +5,7 @@ RUN mkdir /var/log/named
 
 COPY named.conf /etc/bind
 COPY l2-3.ephec-ti.be.zone /etc/bind
-COPY 56.205.35.in-addr.arpa.zone /etc/bind
+COPY 249.140.34.in-addr.arpa.zone /etc/bind
 
 EXPOSE 53/udp
 EXPOSE 53/tcp
