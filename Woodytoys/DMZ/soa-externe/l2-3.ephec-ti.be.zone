@@ -16,7 +16,9 @@ b2b          IN     A       35.205.56.229
 www          IN     A       35.205.56.229
 mail         IN     A       35.205.56.229
 
+mail.l2-3.ephec-ti.be. A 35.205.56.229;
+l2-3.ephec-ti.be. MX 10 mail.l2-3.ephec-ti.be.be.
+
 imap         IN     CNAME   mail
 pop3         IN     CNAME   mail
 smtp         IN     CNAME   mail
-
