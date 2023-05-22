@@ -152,19 +152,17 @@ services:
 
   mail-serveur:
     build:
-      context: ./dmz/mail
+      context: ./DMZ/mail
       dockerfile: Dockerfile
     networks:
       dmz:
         ipv4_address: 10.3.0.4
     container_name: mail-server
-    ports:
-      - "2525:25"
     dns: 10.3.0.3
 
   contact:
     build:
-      context: ./dmz/mail/Client-mail
+      context: ./DMZ/mail/Client-mail
       dockerfile: Dockerfile
     networks:
       trusted-zone:
@@ -176,7 +174,7 @@ services:
 
   b2b:
     build:
-      context: ./dmz/mail/Client-b2b
+      context: ./DMZ/mail/Client-b2b
       dockerfile: Dockerfile
     networks:
       trusted-zone:
