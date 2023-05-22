@@ -16,9 +16,6 @@ b2b          IN     A       34.140.249.41
 www          IN     A       34.140.249.41
 mail         IN     A       34.140.249.41
 
-mail.l2-3.ephec-ti.be. A 34.140.249.41;
-l2-3.ephec-ti.be. MX 10 mail.l2-3.ephec-ti.be.be.
-
 imap         IN     CNAME   mail
 pop3         IN     CNAME   mail
 smtp         IN     CNAME   mail

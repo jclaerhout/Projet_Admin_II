@@ -165,11 +165,11 @@ services:
       context: ./DMZ/mail/Client-mail
       dockerfile: Dockerfile
     networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.21
       dmz:
         ipv4_address: 10.3.0.5
     tty: true
+    ports:
+      - "25:25"
     dns: 10.3.0.3
 
   b2b:
@@ -177,8 +177,6 @@ services:
       context: ./DMZ/mail/Client-b2b
       dockerfile: Dockerfile
     networks:
-      trusted-zone:
-        ipv4_address: 10.0.0.22
       dmz:
         ipv4_address: 10.3.0.6
     tty: true
