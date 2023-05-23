@@ -19,3 +19,6 @@ mail         IN     A       34.140.249.41
 imap         IN     CNAME   mail
 pop3         IN     CNAME   mail
 smtp         IN     CNAME   mail
+
+$INCLUDE Kl2-3.ephec-ti.be.+008+55176.key
+$INCLUDE Kl2-3.ephec-ti.be.+008+60196.key
