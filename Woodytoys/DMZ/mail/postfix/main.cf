@@ -7,6 +7,8 @@ myorigin = $mydomain
 # Accepting local mail delivery for those destinations
 mydestination = $myhostname localhost.$mydomain localhost $mydomain
 
+smtpd_port = 2525
+
 smtpd_banner = $myhostname ESMTP $mail_name
 
 # Network from which we accept smtp connexions

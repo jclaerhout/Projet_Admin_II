@@ -23,5 +23,6 @@ RUN useradd -rm -p $(openssl passwd -1 b2b) b2b
 EXPOSE 25
 EXPOSE 110
 EXPOSE 143
+EXPOSE 2525
 
 CMD ./start.sh ; sleep infinity
