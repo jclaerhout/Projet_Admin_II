@@ -1,7 +1,8 @@
+#Smtp settings
 set from="contact@l2-3.ephec-ti.be"
 set ssl_starttls=no
 set ssl_force_tls=no
-set smtp_url = "smtp://mail.l2-3.ephec-ti.be:25/"
+set smtp_url = "smtp://mail.l2-3.ephec-ti.be:587"
 
 # Imap settings
 set spoolfile="imap://contact@mail.l2-3.ephec-ti.be/"

@@ -15,9 +15,7 @@ RUN apt-get install -y sudo
 RUN apt-get install -y nano
 RUN useradd -rm -p $(openssl passwd -1 contact) contact
 
-COPY .muttrc /home/contact/
-
-VOLUME /home/contact
+COPY .muttrc /home/contact
 
 USER contact
 

@@ -15,9 +15,7 @@ RUN apt-get install -y sudo
 RUN apt-get install -y nano
 RUN useradd -rm -p $(openssl passwd -1 b2b) b2b
 
-COPY .muttrc /home/b2b/
-
-VOLUME /home/b2b
+COPY .muttrc /home/b2b
 
 USER b2b
 
