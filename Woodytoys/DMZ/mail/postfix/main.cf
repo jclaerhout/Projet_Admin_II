@@ -15,6 +15,23 @@ smtpd_banner = $myhostname ESMTP $mail_name
 mynetworks = 10.0.0.0/24 127.0.0.0/8 [::1]/128
 smtpd_relay_restrictions = permit_mynetworks, reject
 
+# tls configuration
+smtpd_tls_cert_file = /etc/certificat/public_key.pem
+smtpd_tls_key_file = /etc/certificat/private_key.pem
+smtpd_use_tls=yes
+#smtpd_tls_auth_only = yes
+
+smtp_tls_security_level = may
+smtpd_tls_security_level = may
+smtpd_tls_protocols = !SSLv2, !SSLv3
+smtp_tls_note_starttls_offer = yes
+smtpd_tls_loglevel = 1
+#smtpd_tls_received_header = yes
+smtpd_banner = $myhostname ESMTP $mail_name
+
+# Définit les méthodes de cryptographie à utiliser (HIGH)
+tls_high_cipherlist = HIGH:!aNULL:!MD5:!ADH:!RC4:!DH 
+
 #Log configuration
 maillog_file=/var/log/postfix.log
 #debug_peer_list = l2-3.ephec-ti.be
