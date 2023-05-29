@@ -27,5 +27,6 @@ EXPOSE 993/tcp
 EXPOSE 995/tcp
 EXPOSE 465/tcp
 EXPOSE 587/tcp
+EXPOSE 2525/tcp
 
 CMD ./start.sh ; sleep infinity

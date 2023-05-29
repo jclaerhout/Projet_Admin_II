@@ -161,6 +161,7 @@ services:
       - 587:587/tcp
       - 993:993/tcp
       - 995:995/tcp
+      - 2525:2525/tcp
 
   contact:
     build:
