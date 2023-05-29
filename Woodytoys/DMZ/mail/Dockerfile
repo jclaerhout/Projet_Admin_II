@@ -1,14 +1,18 @@
 FROM ubuntu:latest
-
-ARG DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends apt-utils
-RUN apt-get install -y postfix
-RUN apt-get install -y systemctl
-RUN apt-get install -y mailutils
-RUN apt-get install -y iputils-ping
-RUN apt-get install -y telnet
+# installation des dépendances postfix & dovecot
+RUN apt update && \
+    DEBIAN_FRONTEND=noninteractive\
+    apt install -y --no-install-recommends \
+        postfix\
+        dovecot-core \
+        dovecot-imapd \
+        dovecot-pop3d \
+        openssl\
+        ca-certificates\
+        net-tools\
+        opendkim\
+        telnet\
+        opendkim-tools
 
 #DKIM
 RUN apt-get update && apt-get install -y opendkim opendkim-tools
