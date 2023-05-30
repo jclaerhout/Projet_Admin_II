@@ -29,8 +29,6 @@ COPY dovecot/dovecot.conf /etc/dovecot/dovecot.conf
 COPY ssl/init_ssl.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/init_ssl.sh
 
-RUN chmod 111 start.sh
-
 RUN useradd -rm -p $(openssl passwd -1 contact) contact
 RUN useradd -rm -p $(openssl passwd -1 b2b) b2b
 
