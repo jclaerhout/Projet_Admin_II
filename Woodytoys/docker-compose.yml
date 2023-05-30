@@ -190,3 +190,5 @@ services:
 
 volumes:
   db:
+  ssl_private:
+  ssl_certs:
