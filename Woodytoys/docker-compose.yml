@@ -155,6 +155,9 @@ services:
       context: ./DMZ/mail
       dockerfile: Dockerfile
     container_name: mail-server
+    volumes:
+      - ssl_private:/etc/ssl/private
+      - ssl_certs:/etc/ssl/certs
     ports:
       - 25:25/tcp
       - 465:465/tcp

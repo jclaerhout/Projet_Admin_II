@@ -16,8 +16,8 @@ mynetworks = 34.140.249.41 127.0.0.0/8 [::1]/128
 smtpd_relay_restrictions = permit_mynetworks, reject
 
 # tls configuration
-smtpd_tls_cert_file = /etc/certificat/public_key.pem
-smtpd_tls_key_file = /etc/certificat/private_key.pem
+smtpd_tls_cert_file=/etc/ssl/certs/server.crt
+smtpd_tls_key_file=/etc/ssl/private/server.key
 smtpd_use_tls=yes
 #smtpd_tls_auth_only = yes
 

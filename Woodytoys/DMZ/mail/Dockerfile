@@ -14,19 +14,20 @@ RUN apt update && \
         telnet\
         opendkim-tools
 
+VOLUME ["/ssl_private", "/ssl_certs"]
+
 #DKIM
 RUN apt-get update && apt-get install -y opendkim opendkim-tools
 RUN mkdir /etc/opendkim
-
 #COPY opendkim/dkim_key.private /etc/opendkim/   pas de clef privée
 COPY opendkim/dkim_key.txt /etc/opendkim/
 
 COPY postfix/main.cf/  /etc/postfix/main.cf
 COPY dovecot/dovecot.conf /etc/dovecot/dovecot.conf
-COPY start.sh .
 
-COPY private_key.pem /etc/certificat/
-COPY public_key.pem /etc/certificat/
+#SSL
+COPY ssl/init_ssl.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/init_ssl.sh
 
 RUN chmod 111 start.sh
 
@@ -40,4 +41,4 @@ EXPOSE 465/tcp
 EXPOSE 587/tcp
 EXPOSE 2525/tcp
 
-CMD ./start.sh ; sleep infinity
+CMD ["/bin/bash", "-c", "/usr/local/bin/init_ssl.sh && /usr/sbin/postfix start && /usr/sbin/dovecot -F"]
