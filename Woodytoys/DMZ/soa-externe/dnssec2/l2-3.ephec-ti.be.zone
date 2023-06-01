@@ -1,10 +1,10 @@
 $ORIGIN l2-3.ephec-ti.be.
 $TTL 86400
-@       IN      SOA     soa.l2-3.ephec-ti.be. j.claerhout.students.ephec.be. (
+@       IN      SOA     ns.l2-3.ephec-ti.be. hostmaster@l2-3.ephe-ti.be. (
                     2001062501 ; serial
-                    21600      ; refresh after 6 hours
+                    3600      ; refresh after 1 hour
                     3600       ; retry after 1 hour
-                    604800     ; expire after 1 week
+                    1209600    ; expire after 14 days
                     86400 )    ; minimum TTL of 1 day
 
       IN     NS     ns.l2-3.ephec-ti.be.
@@ -20,12 +20,12 @@ imap         IN     CNAME   mail
 pop3         IN     CNAME   mail
 smtp         IN     CNAME   mail
 
-$INCLUDE Kl2-3.ephec-ti.be.+008+55176.key
-$INCLUDE Kl2-3.ephec-ti.be.+008+60196.key
+$INCLUDE Kl2-3.ephec-ti.be.+008+58465.key #ZSK
+$INCLUDE Kl2-3.ephec-ti.be.+008+63778.key #KSK
 
 
 dkimkey._domainkey.l2-3.ephec-ti.be.      IN     TXT    "v=DKIM1;t=s;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD+v15Jb5SH4UHOXtHL5brt0qBKL9WPvsNjxNgPK+0mibN07P0FYeqrAUfJjLM8bgWlBIAdkmBUtMZe4Z73qraxEROiZLYo3PHmMhAoWL1UfrV7YXQ84Isic4PggIL70JhrUSHpORq3IL5ohhlLALFJwNbns5Cjajx7RA450iZn1QIDAQAB";
 
-_domainkey.m2-2.ephec-ti.be.            IN     TXT    "o=~;";
+_domainkey.l2-3.ephec-ti.be.            IN     TXT    "o=~;";
 
-_83C41C9EA56BC983BE51B08F4132A15D.m2-2.ephec-ti.be. 3600 IN CNAME 128441F103B8A3FF86399E4AF026D25A.F23D00869FBAEAE093434D9FC43A32DC.868fd468d7a6cab.comodoca.com.;
+_83C41C9EA56BC983BE51B08F4132A15D.l2-3.ephec-ti.be. 3600 IN CNAME 128441F103B8A3FF86399E4AF026D25A.F23D00869FBAEAE093434D9FC43A32DC.868fd468d7a6cab.comodoca.com.;

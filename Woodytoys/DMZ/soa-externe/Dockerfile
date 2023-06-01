@@ -6,10 +6,7 @@ RUN mkdir /var/log/named
 WORKDIR /etc/bind
 
 COPY named.conf /etc/bind
-COPY dnssec/* /etc/bind
-
-#RUN chown root:bind etc/bind/Kl2-3.ephec-ti.be*
-#RUN chown root:bind etc/bind/l2-3.ephec-ti.be.zone.signed
+COPY l2-3.ephec-ti.be.zone.signed /etc/bind
 
 EXPOSE 53/udp
 EXPOSE 53/tcp
