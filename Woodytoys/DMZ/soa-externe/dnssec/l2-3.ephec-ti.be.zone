@@ -20,12 +20,15 @@ imap         IN     CNAME   mail
 pop3         IN     CNAME   mail
 smtp         IN     CNAME   mail
 
-$INCLUDE Kl2-3.ephec-ti.be.+008+58465.key #ZSK
-$INCLUDE Kl2-3.ephec-ti.be.+008+63778.key #KSK
+@       IN      TXT     "v=spf1 ip4:34.125.101.234 -all"
 
+_dmarc          IN      TXT     "v=DMARC1;p=quarantine;pct=100"
 
 dkimkey._domainkey.l2-3.ephec-ti.be.      IN     TXT    "v=DKIM1;t=s;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD+v15Jb5SH4UHOXtHL5brt0qBKL9WPvsNjxNgPK+0mibN07P0FYeqrAUfJjLM8bgWlBIAdkmBUtMZe4Z73qraxEROiZLYo3PHmMhAoWL1UfrV7YXQ84Isic4PggIL70JhrUSHpORq3IL5ohhlLALFJwNbns5Cjajx7RA450iZn1QIDAQAB";
 
 _domainkey.l2-3.ephec-ti.be.            IN     TXT    "o=~;";
 
 _83C41C9EA56BC983BE51B08F4132A15D.l2-3.ephec-ti.be. 3600 IN CNAME 128441F103B8A3FF86399E4AF026D25A.F23D00869FBAEAE093434D9FC43A32DC.868fd468d7a6cab.comodoca.com.;
+
+$INCLUDE Kl2-3.ephec-ti.be.+008+10306.key #ZSK
+$INCLUDE Kl2-3.ephec-ti.be.+008+56595.key #KSK
